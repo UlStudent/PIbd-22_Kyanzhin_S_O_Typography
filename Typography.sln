@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyView", "TypographyView\TypographyView.csproj", "{833018B2-15D8-4AA5-865E-A63F7B911C2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyBusinessLogic", "TypographyBusinessLogic\TypographyBusinessLogic.csproj", "{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyListImplement", "TypographyListImplement\TypographyListImplement.csproj", "{86CE7C85-6E26-4F04-B007-5131EC64CEF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CE7C85-6E26-4F04-B007-5131EC64CEF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CE7C85-6E26-4F04-B007-5131EC64CEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CE7C85-6E26-4F04-B007-5131EC64CEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CE7C85-6E26-4F04-B007-5131EC64CEF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
