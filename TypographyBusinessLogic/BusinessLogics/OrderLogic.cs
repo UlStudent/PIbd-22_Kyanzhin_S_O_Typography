@@ -30,7 +30,7 @@ namespace TypographyBusinessLogic.BusinessLogics
         {
             _orderStorage.Insert(new OrderBindingModel
             {
-                ProductId = model.ProductId,
+                PrintedId = model.PrintedId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -55,7 +55,7 @@ namespace TypographyBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                PrintedId = order.PrintedId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -81,7 +81,7 @@ namespace TypographyBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                PrintedId = order.PrintedId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -103,7 +103,7 @@ namespace TypographyBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                PrintedId = order.PrintedId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,

@@ -100,7 +100,7 @@ namespace TypographyListImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order order)
         {
-            order.ProductId = model.ProductId;
+            order.PrintedId = model.PrintedId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -111,18 +111,18 @@ namespace TypographyListImplement.Implements
         private OrderViewModel CreateModel(Order order)
         {
             string printedName = null;
-            foreach (var document in source.Products)
+            foreach (var document in source.Printeds)
             {
                 if (document.Id == order.Id)
                 {
-                    printedName = document.ProductName;
+                    printedName = document.PrintedName;
                 }
             }
             return new OrderViewModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
-                ProductName = printedName,
+                PrintedId = order.PrintedId,
+                PrintedName = printedName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

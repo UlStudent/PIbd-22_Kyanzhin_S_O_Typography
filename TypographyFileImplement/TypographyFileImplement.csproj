@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TypographyBusinessLogic\TypographyBusinessLogic.csproj" />
+    <ProjectReference Include="..\TypographyListImplement\TypographyListImplement.csproj" />
+  </ItemGroup>
+
+</Project>

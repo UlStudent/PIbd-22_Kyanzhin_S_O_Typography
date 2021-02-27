@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TypographyListImplement.Models
+namespace TypographyFileImplement.Models
 {
     public class Printed
     {

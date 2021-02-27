@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TypographyBusinessLogic.Enums;
 
-namespace TypographyListImplement.Models
+namespace TypographyFileImplement.Models
 {
     public class Order
     {
