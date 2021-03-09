@@ -1,7 +1,7 @@
 ﻿using System;
 using TypographyBusinessLogic.BusinessLogics;
 using TypographyBusinessLogic.Interfaces;
-using TypographyFileImplement.Implements;
+using TypographyDatabaseImplement.Implements;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
