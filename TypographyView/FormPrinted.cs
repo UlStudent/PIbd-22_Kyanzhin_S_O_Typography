@@ -15,13 +15,13 @@ namespace TypographyView
 		public int Id { set { id = value; } }
 		private readonly PrintedLogic logic;
 		private int? id;
-		private Dictionary<int, (string, int)> productComponents;
+		private Dictionary<int, (string, int)> printedComponents;
 		public FormPrinted(PrintedLogic service)
 		{
 			InitializeComponent();
 			this.logic = service;
 		}
-		private void FormProduct_Load(object sender, EventArgs e)
+		private void FormPrinted_Load(object sender, EventArgs e)
 		{
 
 			if (id.HasValue)
@@ -31,9 +31,9 @@ namespace TypographyView
 					PrintedViewModel view = logic.Read(new PrintedBindingModel { Id = id.Value })?[0];
 					if (view != null)
 					{
-						textBoxName.Text = view.ProductName;
+						textBoxName.Text = view.PrintedName;
 						textBoxPrice.Text = view.Price.ToString();
-						productComponents = view.ProductComponents;
+						printedComponents = view.PrintedComponents;
 						LoadData();
 					}
 				}
@@ -45,17 +45,17 @@ namespace TypographyView
 			}
 			else
 			{
-				productComponents = new Dictionary<int, (string, int)>();
+				printedComponents = new Dictionary<int, (string, int)>();
 			}
 		}
 		private void LoadData()
 		{
 			try
 			{
-				if (productComponents != null)
+				if (printedComponents != null)
 				{
 					dataGridView.Rows.Clear();
-					foreach (var pc in productComponents)
+					foreach (var pc in printedComponents)
 					{
 						dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1, pc.Value.Item2 });
 					}
@@ -72,13 +72,13 @@ namespace TypographyView
 			var form = Container.Resolve<FormPrintedComponent>();
 			if (form.ShowDialog() == DialogResult.OK)
 			{
-				if (productComponents.ContainsKey(form.Id))
+				if (printedComponents.ContainsKey(form.Id))
 				{
-					productComponents[form.Id] = (form.ComponentName, form.Count);
+					printedComponents[form.Id] = (form.ComponentName, form.Count);
 				}
 				else
 				{
-					productComponents.Add(form.Id, (form.ComponentName, form.Count));
+					printedComponents.Add(form.Id, (form.ComponentName, form.Count));
 				}
 				LoadData();
 			}
@@ -90,10 +90,10 @@ namespace TypographyView
 				var form = Container.Resolve<FormPrintedComponent>();
 				int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
 				form.Id = id;
-				form.Count = productComponents[id].Item2;
+				form.Count = printedComponents[id].Item2;
 				if (form.ShowDialog() == DialogResult.OK)
 				{
-					productComponents[form.Id] = (form.ComponentName, form.Count);
+					printedComponents[form.Id] = (form.ComponentName, form.Count);
 					LoadData();
 				}
 			}
@@ -108,7 +108,7 @@ namespace TypographyView
 					try
 					{
 
-						productComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+						printedComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
 					}
 					catch (Exception ex)
 					{
@@ -137,7 +137,7 @@ namespace TypographyView
 			   MessageBoxIcon.Error);
 				return;
 			}
-			if (productComponents == null || productComponents.Count == 0)
+			if (printedComponents == null || printedComponents.Count == 0)
 			{
 				MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
 			   MessageBoxIcon.Error);
@@ -148,9 +148,9 @@ namespace TypographyView
 				logic.CreateOrUpdate(new PrintedBindingModel
 				{
 					Id = id,
-					ProductName = textBoxName.Text,
+					PrintedName = textBoxName.Text,
 					Price = Convert.ToDecimal(textBoxPrice.Text),
-					ProductComponents = productComponents
+					PrintedComponents = printedComponents
 				});
 				MessageBox.Show("Сохранение прошло успешно", "Сообщение",
 			   MessageBoxButtons.OK, MessageBoxIcon.Information);

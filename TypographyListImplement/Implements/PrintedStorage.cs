@@ -18,7 +18,7 @@ namespace TypographyListImplement.Implements
 		public List<PrintedViewModel> GetFullList()
 		{
 			List<PrintedViewModel> result = new List<PrintedViewModel>();
-			foreach (var component in source.Products)
+			foreach (var component in source.Printeds)
 			{
 				result.Add(CreateModel(component));
 			}
@@ -31,11 +31,11 @@ namespace TypographyListImplement.Implements
 				return null;
 			}
 			List<PrintedViewModel> result = new List<PrintedViewModel>();
-			foreach (var product in source.Products)
+			foreach (var printed in source.Printeds)
 			{
-				if (product.ProductName.Contains(model.ProductName))
+				if (printed.PrintedName.Contains(model.PrintedName))
 				{
-					result.Add(CreateModel(product));
+					result.Add(CreateModel(printed));
 				}
 			}
 			return result;
@@ -46,95 +46,95 @@ namespace TypographyListImplement.Implements
 			{
 				return null;
 			}
-			foreach (var product in source.Products)
+			foreach (var printed in source.Printeds)
 			{
-				if (product.Id == model.Id || product.ProductName ==
-				model.ProductName)
+				if (printed.Id == model.Id || printed.PrintedName ==
+				model.PrintedName)
 				{
-					return CreateModel(product);
+					return CreateModel(printed);
 				}
 			}
 			return null;
 		}
 		public void Insert(PrintedBindingModel model)
 		{
-			Printed tempProduct = new Printed
+			Printed tempPrinted = new Printed
 			{
 				Id = 1,
-				ProductComponents = new
+				PrintedComponents = new
 			Dictionary<int, int>()
 			};
-			foreach (var product in source.Products)
+			foreach (var printed in source.Printeds)
 			{
-				if (product.Id >= tempProduct.Id)
+				if (printed.Id >= tempPrinted.Id)
 				{
-					tempProduct.Id = product.Id + 1;
+					tempPrinted.Id = printed.Id + 1;
 				}
 			}
-			source.Products.Add(CreateModel(model, tempProduct));
+			source.Printeds.Add(CreateModel(model, tempPrinted));
 		}
 		public void Update(PrintedBindingModel model)
 		{
-			Printed tempProduct = null;
-			foreach (var product in source.Products)
+			Printed tempPrinted = null;
+			foreach (var printed in source.Printeds)
 			{
-				if (product.Id == model.Id)
+				if (printed.Id == model.Id)
 				{
-					tempProduct = product;
+					tempPrinted = printed;
 				}
 			}
-			if (tempProduct == null)
+			if (tempPrinted == null)
 			{
 				throw new Exception("Элемент не найден");
 			}
-			CreateModel(model, tempProduct);
+			CreateModel(model, tempPrinted);
 		}
 		public void Delete(PrintedBindingModel model)
 		{
-			for (int i = 0; i < source.Products.Count; ++i)
+			for (int i = 0; i < source.Printeds.Count; ++i)
 			{
-				if (source.Products[i].Id == model.Id)
+				if (source.Printeds[i].Id == model.Id)
 				{
-					source.Products.RemoveAt(i);
+					source.Printeds.RemoveAt(i);
 					return;
 				}
 			}
 			throw new Exception("Элемент не найден");
 		}
-		private Printed CreateModel(PrintedBindingModel model, Printed product)
+		private Printed CreateModel(PrintedBindingModel model, Printed printed)
 		{
-			product.ProductName = model.ProductName;
-			product.Price = model.Price;
+			printed.PrintedName = model.PrintedName;
+			printed.Price = model.Price;
 			// удаляем убранные
-			foreach (var key in product.ProductComponents.Keys.ToList())
+			foreach (var key in printed.PrintedComponents.Keys.ToList())
 			{
-				if (!model.ProductComponents.ContainsKey(key))
+				if (!model.PrintedComponents.ContainsKey(key))
 				{
-					product.ProductComponents.Remove(key);
+					printed.PrintedComponents.Remove(key);
 				}
 			}
 			// обновляем существуюущие и добавляем новые
-			foreach (var component in model.ProductComponents)
+			foreach (var component in model.PrintedComponents)
 			{
-				if (product.ProductComponents.ContainsKey(component.Key))
+				if (printed.PrintedComponents.ContainsKey(component.Key))
 				{
-					product.ProductComponents[component.Key] =
-					model.ProductComponents[component.Key].Item2;
+					printed.PrintedComponents[component.Key] =
+					model.PrintedComponents[component.Key].Item2;
 				}
 				else
 				{
-					product.ProductComponents.Add(component.Key,
-					model.ProductComponents[component.Key].Item2);
+					printed.PrintedComponents.Add(component.Key,
+					model.PrintedComponents[component.Key].Item2);
 				}
 			}
-			return product;
+			return printed;
 		}
-		private PrintedViewModel CreateModel(Printed product)
+		private PrintedViewModel CreateModel(Printed printed)
 		{
 			// требуется дополнительно получить список компонентов для изделия с названиями и их количество
-			Dictionary<int, (string, int)> productComponents = new
+			Dictionary<int, (string, int)> printedComponents = new
 			Dictionary<int, (string, int)>();
-			foreach (var pc in product.ProductComponents)
+			foreach (var pc in printed.PrintedComponents)
 			{
 				string componentName = string.Empty;
 				foreach (var component in source.Components)
@@ -145,14 +145,14 @@ namespace TypographyListImplement.Implements
 						break;
 					}
 				}
-				productComponents.Add(pc.Key, (componentName, pc.Value));
+				printedComponents.Add(pc.Key, (componentName, pc.Value));
 			}
 			return new PrintedViewModel
 			{
-				Id = product.Id,
-				ProductName = product.ProductName,
-				Price = product.Price,
-				ProductComponents = productComponents
+				Id = printed.Id,
+				PrintedName = printed.PrintedName,
+				Price = printed.Price,
+				PrintedComponents = printedComponents
 			};
 		}
 

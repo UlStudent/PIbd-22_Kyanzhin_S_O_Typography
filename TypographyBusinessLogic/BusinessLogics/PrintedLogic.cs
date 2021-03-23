@@ -28,7 +28,7 @@ namespace TypographyBusinessLogic.BusinessLogics
         }
         public void CreateOrUpdate(PrintedBindingModel model)
         {
-            var element = _printedStorage.GetElement(new PrintedBindingModel { ProductName = model.ProductName });
+            var element = _printedStorage.GetElement(new PrintedBindingModel { PrintedName = model.PrintedName });
             if (element != null && element.Id != model.Id)
             {
                 throw new Exception("Уже есть изделие с таким названием");

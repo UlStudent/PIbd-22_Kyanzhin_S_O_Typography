@@ -32,7 +32,7 @@ namespace TypographyView
             this.labelName = new System.Windows.Forms.Label();
             this.labelCount = new System.Windows.Forms.Label();
             this.labelSum = new System.Windows.Forms.Label();
-            this.comboBoxProduct = new System.Windows.Forms.ComboBox();
+            this.comboBoxPrinted = new System.Windows.Forms.ComboBox();
             this.textBoxCount = new System.Windows.Forms.TextBox();
             this.textBoxSum = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -66,14 +66,14 @@ namespace TypographyView
             this.labelSum.TabIndex = 2;
             this.labelSum.Text = "Сумма:";
             // 
-            // comboBoxProduct
+            // comboBoxPrinted
             // 
-            this.comboBoxProduct.FormattingEnabled = true;
-            this.comboBoxProduct.Location = new System.Drawing.Point(118, 28);
-            this.comboBoxProduct.Name = "comboBoxProduct";
-            this.comboBoxProduct.Size = new System.Drawing.Size(191, 21);
-            this.comboBoxProduct.TabIndex = 3;
-            this.comboBoxProduct.SelectedIndexChanged += new System.EventHandler(this.ComboBoxProduct_SelectedIndexChanged);
+            this.comboBoxPrinted.FormattingEnabled = true;
+            this.comboBoxPrinted.Location = new System.Drawing.Point(118, 28);
+            this.comboBoxPrinted.Name = "comboBoxPrinted";
+            this.comboBoxPrinted.Size = new System.Drawing.Size(191, 21);
+            this.comboBoxPrinted.TabIndex = 3;
+            this.comboBoxPrinted.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPrinted_SelectedIndexChanged);
             // 
             // textBoxCount
             // 
@@ -121,7 +121,7 @@ namespace TypographyView
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.textBoxSum);
             this.Controls.Add(this.textBoxCount);
-            this.Controls.Add(this.comboBoxProduct);
+            this.Controls.Add(this.comboBoxPrinted);
             this.Controls.Add(this.labelSum);
             this.Controls.Add(this.labelCount);
             this.Controls.Add(this.labelName);
@@ -138,7 +138,7 @@ namespace TypographyView
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.Label labelSum;
-        private System.Windows.Forms.ComboBox comboBoxProduct;
+        private System.Windows.Forms.ComboBox comboBoxPrinted;
         private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.TextBox textBoxSum;
         private System.Windows.Forms.Button buttonSave;
