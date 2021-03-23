@@ -13,10 +13,12 @@ namespace TypographyView
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
-        public FormMain(OrderLogic orderLogic)
+        private readonly ReportLogic _report;
+        public FormMain(OrderLogic orderLogic, ReportLogic report)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
+            this._report = report;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -118,6 +120,35 @@ namespace TypographyView
         private void ButtonRef_Click(object sender, EventArgs e)
         {
             LoadData();
+        }
+
+        private void компонентыПоИзделиямToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportPrintedComponents>();
+            form.ShowDialog();
+        }
+
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+
+        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _report.SavePrintedsToWordFile(new ReportBindingModel
+                    {
+                        FileName =
+                   dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }

@@ -46,7 +46,7 @@ namespace TypographyFileImplement.Implements
                 return null;
             }
             return source.Orders
-            .Where(rec => rec.PrintedId == model.PrintedId)
+            .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
             .Select(CreateModel)
             .ToList();
         }

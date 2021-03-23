@@ -50,7 +50,7 @@ namespace TypographyListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id.Equals(model.Id))
+                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                 {
                     result.Add(CreateModel(order));
                 }

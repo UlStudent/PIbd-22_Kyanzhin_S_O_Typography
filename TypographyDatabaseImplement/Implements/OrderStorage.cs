@@ -38,7 +38,7 @@ namespace TypographyDatabaseImplement.Implements
             using (var context = new TypographyDatabase())
             {
                 return context.Orders
-                .Where(rec => rec.PrintedId == model.PrintedId)
+                .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
