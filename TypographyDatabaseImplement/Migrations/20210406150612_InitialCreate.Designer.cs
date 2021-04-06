@@ -10,8 +10,8 @@ using TypographyDatabaseImplement;
 namespace TypographyDatabaseImplement.Migrations
 {
     [DbContext(typeof(TypographyDatabase))]
-    [Migration("20210309105551_InitialCreateTwo")]
-    partial class InitialCreateTwo
+    [Migration("20210406150612_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace TypographyDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PrintedName")
+                    b.Property<string>("ComponentName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -76,12 +76,12 @@ namespace TypographyDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PrintedName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -115,7 +115,7 @@ namespace TypographyDatabaseImplement.Migrations
 
             modelBuilder.Entity("TypographyDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "printed")
+                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printed")
                         .WithMany("Orders")
                         .HasForeignKey("PrintedId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -130,7 +130,7 @@ namespace TypographyDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "printed")
+                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printed")
                         .WithMany("PrintedComponents")
                         .HasForeignKey("PrintedId")
                         .OnDelete(DeleteBehavior.Cascade)
