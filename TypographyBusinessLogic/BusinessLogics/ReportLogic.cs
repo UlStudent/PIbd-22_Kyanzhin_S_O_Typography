@@ -27,23 +27,22 @@ namespace TypographyBusinessLogic.BusinessLogics
         public List<ReportPrintedComponentViewModel> GetPrintedComponent()
         {
             var components = _componentStorage.GetFullList();
-            var printed = _printedStorage.GetFullList();
+            var planes = _printedStorage.GetFullList();
             var list = new List<ReportPrintedComponentViewModel>();
-            foreach (var component in components)
+            foreach (var plane in planes)
             {
                 var record = new ReportPrintedComponentViewModel
                 {
-                    ComponentName = component.ComponentName,
-                    Printed = new List<Tuple<string, int>>(),
-                    TotalCount = 0
+                    PrintedComponents = new List<Tuple<string, int>>(),
+                    TotalCount = 0,
+                    PrintedName = plane.PrintedName
                 };
-                foreach (var _printed in printed)
+                foreach (var component in components)
                 {
-                    if (_printed.PrintedComponents.ContainsKey(component.Id))
+                    if (plane.PrintedComponents.ContainsKey(component.Id))
                     {
-                        record.Printed.Add(new Tuple<string, int>(_printed.PrintedName,
-                       _printed.PrintedComponents[component.Id].Item2));
-                        record.TotalCount += _printed.PrintedComponents[component.Id].Item2;
+                        record.PrintedComponents.Add(new Tuple<string, int>(component.ComponentName, plane.PrintedComponents[component.Id].Item2));
+                        record.TotalCount += plane.PrintedComponents[component.Id].Item2;
                     }
                 }
                 list.Add(record);
@@ -95,7 +94,7 @@ namespace TypographyBusinessLogic.BusinessLogics
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список изделий",
                 PrintedComponents = GetPrintedComponent()
             });
         }

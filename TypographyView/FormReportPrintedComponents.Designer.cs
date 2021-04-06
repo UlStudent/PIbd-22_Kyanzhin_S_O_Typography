@@ -64,12 +64,12 @@ namespace TypographyView
             // 
             // Component
             // 
-            this.Component.HeaderText = "Компонент";
+            this.Component.HeaderText = "Изделие";
             this.Component.Name = "Component";
             // 
             // Printed
             // 
-            this.Printed.HeaderText = "Изделие";
+            this.Printed.HeaderText = "Компонент";
             this.Printed.Name = "Printed";
             // 
             // Count
@@ -85,7 +85,7 @@ namespace TypographyView
             this.Controls.Add(this.buttonSaveToExcel);
             this.Controls.Add(this.dataGridView);
             this.Name = "FormReportPrintedComponents";
-            this.Text = "Компоненты по изделиям";
+            this.Text = "Изделия по компонентам";
             this.Load += new System.EventHandler(this.FormReportPrintedComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

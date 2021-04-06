@@ -26,8 +26,8 @@ namespace TypographyView
                     dataGridView.Rows.Clear();
                     foreach (var elem in dict)
                     {
-                        dataGridView.Rows.Add(new object[] { elem.ComponentName, "", "" });
-                        foreach (var listElem in elem.Printed)
+                        dataGridView.Rows.Add(new object[] { elem.PrintedName, "", "" });
+                        foreach (var listElem in elem.PrintedComponents)
                         {
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }
@@ -38,8 +38,7 @@ namespace TypographyView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ButtonSaveToExcel_Click(object sender, EventArgs e)

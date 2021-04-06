@@ -31,7 +31,7 @@ namespace TypographyView
             List<ComponentViewModel> list = logic.Read(null);
             if (list != null)
             {
-                comboBoxComponent.DisplayMember = "ComponentName";
+                comboBoxComponent.DisplayMember = "PrintedName";
                 comboBoxComponent.ValueMember = "Id";
                 comboBoxComponent.DataSource = list;
                 comboBoxComponent.SelectedItem = null;

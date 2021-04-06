@@ -28,7 +28,7 @@ namespace TypographyDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ComponentName")
+                    b.Property<string>("PrintedName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

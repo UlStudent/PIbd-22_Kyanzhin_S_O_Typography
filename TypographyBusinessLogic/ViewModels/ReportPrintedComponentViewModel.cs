@@ -6,8 +6,8 @@ namespace TypographyBusinessLogic.ViewModels
 {
     public class ReportPrintedComponentViewModel
     {
-        public string ComponentName { get; set; }
+        public string PrintedName { get; set; }
         public int TotalCount { get; set; }
-        public List<Tuple<string, int>> Printed { get; set; }
+        public List<Tuple<string, int>> PrintedComponents { get; set; }
     }
 }
