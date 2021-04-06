@@ -45,10 +45,10 @@ namespace TypographyFileImplement.Implements
             {
                 return null;
             }
-            return source.Orders
-            .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
-            .Select(CreateModel)
-            .ToList();
+            return source.Orders.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+            (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
+                 .Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFullList()
@@ -80,6 +80,7 @@ namespace TypographyFileImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order order)
         {
+            order.ClientId = (int)model.ClientId;
             order.PrintedId = model.PrintedId;
             order.Count = model.Count;
             order.Sum = model.Sum;
@@ -90,18 +91,18 @@ namespace TypographyFileImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
-            string printedName = source.Printeds.FirstOrDefault(rec =>
-                    rec.Id == order.PrintedId).PrintedName;
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 PrintedId = order.PrintedId,
-                PrintedName = printedName,
+                PrintedName = source.Printeds.FirstOrDefault(rec => rec.Id == order.PrintedId).PrintedName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO
             };
         }
     }

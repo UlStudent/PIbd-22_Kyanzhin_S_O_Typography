@@ -27,22 +27,22 @@ namespace TypographyBusinessLogic.BusinessLogics
         public List<ReportPrintedComponentViewModel> GetPrintedComponent()
         {
             var components = _componentStorage.GetFullList();
-            var planes = _printedStorage.GetFullList();
+            var printeds = _printedStorage.GetFullList();
             var list = new List<ReportPrintedComponentViewModel>();
-            foreach (var plane in planes)
+            foreach (var printed in printeds)
             {
                 var record = new ReportPrintedComponentViewModel
                 {
                     PrintedComponents = new List<Tuple<string, int>>(),
                     TotalCount = 0,
-                    PrintedName = plane.PrintedName
+                    PrintedName = printed.PrintedName
                 };
                 foreach (var component in components)
                 {
-                    if (plane.PrintedComponents.ContainsKey(component.Id))
+                    if (printed.PrintedComponents.ContainsKey(component.Id))
                     {
-                        record.PrintedComponents.Add(new Tuple<string, int>(component.ComponentName, plane.PrintedComponents[component.Id].Item2));
-                        record.TotalCount += plane.PrintedComponents[component.Id].Item2;
+                        record.PrintedComponents.Add(new Tuple<string, int>(component.ComponentName, printed.PrintedComponents[component.Id].Item2));
+                        record.TotalCount += printed.PrintedComponents[component.Id].Item2;
                     }
                 }
                 list.Add(record);

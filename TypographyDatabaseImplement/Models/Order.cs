@@ -18,5 +18,7 @@ namespace TypographyDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
         public int PrintedId { get; set; }
         public virtual Printed Printed { get; set; }
+        public int ClientId { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

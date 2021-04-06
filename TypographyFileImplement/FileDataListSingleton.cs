@@ -15,14 +15,17 @@ namespace TypographyFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string PrintedFileName = "Printed.xml";
+        private readonly string ClientFileName = "Client.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Printed> Printeds { get; set; }
+        public List<Client> Clients { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Printeds = LoadPrinteds();
+            Clients = LoadClients();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -37,6 +40,26 @@ namespace TypographyFileImplement
             SaveComponents();
             SaveOrders();
             SavePrinteds();
+        }
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
+            {
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+                foreach (var element in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(element.Attribute("Id").Value),
+                        FIO = element.Element("FIO").Value,
+                        Email = element.Element("Email").Value,
+                        Password = element.Element("Password").Value
+                    });
+                }
+            }
+            return list;
         }
         private List<Component> LoadComponents()
         {

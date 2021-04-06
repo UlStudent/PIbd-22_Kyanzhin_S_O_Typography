@@ -101,6 +101,7 @@ namespace TypographyListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PrintedId = model.PrintedId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -118,6 +119,15 @@ namespace TypographyListImplement.Implements
                     printedName = document.PrintedName;
                 }
             }
+            string clientFio = null;
+
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.PrintedId)
+                {
+                    clientFio = client.FIO;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -127,7 +137,8 @@ namespace TypographyListImplement.Implements
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientFIO = clientFio
             };
         } 
     }

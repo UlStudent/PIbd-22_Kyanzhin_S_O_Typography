@@ -14,11 +14,13 @@ namespace TypographyView
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _report;
-        public FormMain(OrderLogic orderLogic, ReportLogic report)
+        private readonly ClientLogic _clientLogic;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
-            this._report = report;
+            this._report = reportLogic;
+            this._clientLogic = clientLogic;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -34,7 +36,7 @@ namespace TypographyView
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[3].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -149,6 +151,12 @@ namespace TypographyView
                    MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
+            form.ShowDialog();
         }
     }
 }

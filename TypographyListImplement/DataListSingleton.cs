@@ -10,11 +10,13 @@ namespace TypographyListImplement
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Printed> Printeds { get; set; }
+        public List<Client> Clients { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
             Orders = new List<Order>();
             Printeds = new List<Printed>();
+            Clients = new List<Client>();
         }
         public static DataListSingleton GetInstance()
         {
