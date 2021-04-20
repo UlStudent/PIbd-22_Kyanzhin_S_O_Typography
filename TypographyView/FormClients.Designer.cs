@@ -30,7 +30,6 @@ namespace TypographyView
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonUpd = new System.Windows.Forms.Button();
             this.buttonDel = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
@@ -46,19 +45,9 @@ namespace TypographyView
             this.dataGridView.Size = new System.Drawing.Size(430, 449);
             this.dataGridView.TabIndex = 1;
             // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Location = new System.Drawing.Point(461, 26);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdd.TabIndex = 2;
-            this.buttonAdd.Text = "Добавить";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.ButtonAdd_Click);
-            // 
             // buttonUpd
             // 
-            this.buttonUpd.Location = new System.Drawing.Point(461, 67);
+            this.buttonUpd.Location = new System.Drawing.Point(461, 12);
             this.buttonUpd.Name = "buttonUpd";
             this.buttonUpd.Size = new System.Drawing.Size(75, 23);
             this.buttonUpd.TabIndex = 3;
@@ -68,7 +57,7 @@ namespace TypographyView
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(461, 113);
+            this.buttonDel.Location = new System.Drawing.Point(461, 57);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(75, 23);
             this.buttonDel.TabIndex = 4;
@@ -78,7 +67,7 @@ namespace TypographyView
             // 
             // buttonRef
             // 
-            this.buttonRef.Location = new System.Drawing.Point(461, 163);
+            this.buttonRef.Location = new System.Drawing.Point(461, 102);
             this.buttonRef.Name = "buttonRef";
             this.buttonRef.Size = new System.Drawing.Size(75, 23);
             this.buttonRef.TabIndex = 5;
@@ -94,7 +83,6 @@ namespace TypographyView
             this.Controls.Add(this.buttonRef);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.buttonUpd);
-            this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.dataGridView);
             this.Name = "FormClients";
             this.Text = "Клиенты";
@@ -107,7 +95,6 @@ namespace TypographyView
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonUpd;
         private System.Windows.Forms.Button buttonDel;
         private System.Windows.Forms.Button buttonRef;

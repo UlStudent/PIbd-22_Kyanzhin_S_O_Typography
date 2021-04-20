@@ -54,12 +54,12 @@ namespace TypographyView
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(0, 27);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(601, 401);
+            this.dataGridView.Size = new System.Drawing.Size(665, 401);
             this.dataGridView.TabIndex = 0;
             // 
             // buttonCreateOrder
             // 
-            this.buttonCreateOrder.Location = new System.Drawing.Point(626, 64);
+            this.buttonCreateOrder.Location = new System.Drawing.Point(671, 64);
             this.buttonCreateOrder.Name = "buttonCreateOrder";
             this.buttonCreateOrder.Size = new System.Drawing.Size(142, 24);
             this.buttonCreateOrder.TabIndex = 1;
@@ -69,7 +69,7 @@ namespace TypographyView
             // 
             // buttonTakeOrder
             // 
-            this.buttonTakeOrder.Location = new System.Drawing.Point(626, 114);
+            this.buttonTakeOrder.Location = new System.Drawing.Point(671, 114);
             this.buttonTakeOrder.Name = "buttonTakeOrder";
             this.buttonTakeOrder.Size = new System.Drawing.Size(142, 24);
             this.buttonTakeOrder.TabIndex = 2;
@@ -79,7 +79,7 @@ namespace TypographyView
             // 
             // buttonOrderReady
             // 
-            this.buttonOrderReady.Location = new System.Drawing.Point(626, 170);
+            this.buttonOrderReady.Location = new System.Drawing.Point(671, 170);
             this.buttonOrderReady.Name = "buttonOrderReady";
             this.buttonOrderReady.Size = new System.Drawing.Size(142, 24);
             this.buttonOrderReady.TabIndex = 3;
@@ -89,7 +89,7 @@ namespace TypographyView
             // 
             // buttonPayOrder
             // 
-            this.buttonPayOrder.Location = new System.Drawing.Point(626, 225);
+            this.buttonPayOrder.Location = new System.Drawing.Point(671, 225);
             this.buttonPayOrder.Name = "buttonPayOrder";
             this.buttonPayOrder.Size = new System.Drawing.Size(142, 24);
             this.buttonPayOrder.TabIndex = 4;
@@ -99,7 +99,7 @@ namespace TypographyView
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(626, 280);
+            this.buttonRefresh.Location = new System.Drawing.Point(671, 280);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(142, 24);
             this.buttonRefresh.TabIndex = 5;
@@ -114,7 +114,7 @@ namespace TypographyView
             this.отчетыToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(789, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(821, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -184,7 +184,7 @@ namespace TypographyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 429);
+            this.ClientSize = new System.Drawing.Size(821, 429);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonPayOrder);
             this.Controls.Add(this.buttonOrderReady);
