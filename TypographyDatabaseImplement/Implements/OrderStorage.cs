@@ -5,6 +5,7 @@ using TypographyDatabaseImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace TypographyDatabaseImplement.Implements
 {
@@ -14,7 +15,7 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                return context.Orders
+                return context.Orders.Include(rec => rec.Printed)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -37,7 +38,7 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                return context.Orders
+                return context.Orders.Include(rec => rec.Printed)
                 .Where(rec => rec.PrintedId == model.PrintedId)
                 .Select(rec => new OrderViewModel
                 {
@@ -61,7 +62,7 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                var order = context.Orders
+                var order = context.Orders.Include(rec => rec.Printed)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
