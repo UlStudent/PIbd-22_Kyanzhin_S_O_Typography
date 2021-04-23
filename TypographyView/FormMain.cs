@@ -14,13 +14,13 @@ namespace TypographyView
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _report;
-        private readonly ClientLogic _clientLogic;
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
+        private readonly WorkModeling _workModeling;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._report = reportLogic;
-            this._clientLogic = clientLogic;
+            this._workModeling = workModeling;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -37,6 +37,8 @@ namespace TypographyView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[3].Visible = false;
+                    dataGridView.Columns[10].Visible = false;
+                    dataGridView.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -157,6 +159,18 @@ namespace TypographyView
         {
             var form = Container.Resolve<FormClients>();
             form.ShowDialog();
+        }
+
+        private void исполнительToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _workModeling.DoWork();
+            LoadData();
         }
     }
 }

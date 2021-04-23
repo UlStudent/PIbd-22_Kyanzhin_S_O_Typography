@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TypographyBusinessLogic.BindingModels;
+using TypographyBusinessLogic.Enums;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
 using TypographyListImplement.Models;
@@ -50,7 +51,11 @@ namespace TypographyListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
+            || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date)
+            || (model.ClientId.HasValue && order.ClientId == model.ClientId)
+            || (model.FreeOrders.HasValue && model.FreeOrders.Value && !order.ImplementerId.HasValue)
+            || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется))
                 {
                     result.Add(CreateModel(order));
                 }
@@ -102,6 +107,7 @@ namespace TypographyListImplement.Implements
         {
             order.PrintedId = model.PrintedId;
             order.ClientId = (int)model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -120,7 +126,6 @@ namespace TypographyListImplement.Implements
                 }
             }
             string clientFio = null;
-
             foreach (var client in source.Clients)
             {
                 if (client.Id == order.PrintedId)
@@ -128,11 +133,21 @@ namespace TypographyListImplement.Implements
                     clientFio = client.FIO;
                 }
             }
+            string implementerFIO = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.ImplementerId)
+                {
+                    implementerFIO = implementer.ImplementerFIO;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
                 PrintedId = order.PrintedId,
+                ImplementerId = order.ImplementerId,
                 PrintedName = printedName,
+                ImplementerFIO = implementerFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

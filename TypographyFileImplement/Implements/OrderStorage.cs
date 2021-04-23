@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TypographyBusinessLogic.BindingModels;
+using TypographyBusinessLogic.Enums;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
 using TypographyFileImplement.Models;
@@ -45,10 +46,12 @@ namespace TypographyFileImplement.Implements
             {
                 return null;
             }
-            return source.Orders.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
-            (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
-                 .Select(CreateModel).ToList();
+            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+                    || (model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue)
+                    || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
+            .Select(CreateModel).ToList();
         }
 
         public List<OrderViewModel> GetFullList()
@@ -82,6 +85,7 @@ namespace TypographyFileImplement.Implements
         {
             order.ClientId = (int)model.ClientId;
             order.PrintedId = model.PrintedId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -96,13 +100,15 @@ namespace TypographyFileImplement.Implements
                 Id = order.Id,
                 ClientId = order.ClientId,
                 PrintedId = order.PrintedId,
+                ClientFIO = source.Clients.FirstOrDefault(x => x.Id == order.ClientId)?.FIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = source.Implementers.FirstOrDefault(x => x.Id == order.ImplementerId)?.ImplementerFIO,
                 PrintedName = source.Printeds.FirstOrDefault(rec => rec.Id == order.PrintedId).PrintedName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
-                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.FIO
+                DateImplement = order.DateImplement
             };
         }
     }

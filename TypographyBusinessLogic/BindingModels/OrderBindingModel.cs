@@ -14,6 +14,9 @@ namespace TypographyBusinessLogic.BindingModels
         [DataMember]
         public int PrintedId { get; set; }
         [DataMember]
+        public int? ImplementerId { get; set; }
+
+        [DataMember]
         public string ClientFIO { get; set; }
         [DataMember]
         public int Count { get; set; }
@@ -29,5 +32,7 @@ namespace TypographyBusinessLogic.BindingModels
         public DateTime? DateFrom { get; set; }
         [DataMember]
         public DateTime? DateTo { get; set; }
+        [DataMember]
+        public bool? FreeOrders { get; set; }
     }
 }

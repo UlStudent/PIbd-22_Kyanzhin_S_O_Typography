@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TypographyBusinessLogic.Enums;
 
 namespace TypographyDatabaseImplement.Implements
 {
@@ -15,13 +16,15 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Printed).Include(rec => rec.Client).Include(rec => rec.Implementer).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     ClientId = rec.ClientId,
+                    ImplementerId = rec.ImplementerId,
                     ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).FIO,
                     PrintedId = rec.PrintedId,
                     PrintedName = context.Printeds.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.PrintedId).PrintedName,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -37,29 +40,41 @@ namespace TypographyDatabaseImplement.Implements
             {
                 return null;
             }
-
             using (var context = new TypographyDatabase())
             {
                 return context.Orders
-                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
+                .Include(rec => rec.Printed)
+               .Include(rec => rec.Client)
+               .Include(rec => rec.Implementer)
+               .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+               rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue &&
+               rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <=
+               model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+               (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status ==
+               OrderStatus.Принят) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId ==
+               model.ImplementerId && rec.Status == OrderStatus.Выполняется))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    ClientId = rec.ClientId,
-                    ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).FIO,
-                    PrintedId = rec.PrintedId,
-                    PrintedName = context.Printeds.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.PrintedId).PrintedName,
                     Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status,
                     DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
+                    DateImplement = rec.DateImplement,
+                    PrintedId = rec.PrintedId,
+                    PrintedName = rec.Printed.PrintedName,
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.FIO,
+                    ImplementerId = rec.ImplementerId,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty,
+                    Status = rec.Status,
+                    Sum = rec.Sum
                 })
-                .ToList();
-
+               .ToList();
             }
         }
+
 
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -77,15 +92,16 @@ namespace TypographyDatabaseImplement.Implements
                     Id = order.Id,
                     ClientId = order.ClientId,
                     ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == order.ClientId).FIO,
+                    ImplementerId = order.ImplementerId,
                     PrintedId = order.PrintedId,
                     PrintedName = context.Printeds.Include(x => x.Orders).FirstOrDefault(x => x.Id == order.PrintedId)?.PrintedName,
+                    ImplementerFIO = context.Implementers.Include(pr => pr.Order).FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO,
                     Count = order.Count,
                     Sum = order.Sum,
                     Status = order.Status,
                     DateCreate = order.DateCreate,
                     DateImplement = order.DateImplement
-                } :
-                null;
+                } : null;
             }
         }
 
@@ -116,16 +132,13 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                Order element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element != null)
+                var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (order == null)
                 {
-                    context.Orders.Remove(element);
-                    context.SaveChanges();
+                    throw new Exception("Заказ не найден");
                 }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                CreateModel(model, order);
+                context.SaveChanges();
             }
         }
 
@@ -137,6 +150,7 @@ namespace TypographyDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ImplementerId = model.ImplementerId;
             order.ClientId = (int)model.ClientId;
             return order;
         }
