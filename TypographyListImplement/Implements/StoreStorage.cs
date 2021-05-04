@@ -147,5 +147,14 @@ namespace TypographyListImplement.Implements
                 StoreComponents = StoreComponents
             };
         }
+        public bool CheckPrintedsByComponents(int PrintedId, int Count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Extract(int ComponentId, int Count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

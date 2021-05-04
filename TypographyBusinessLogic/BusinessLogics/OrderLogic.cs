@@ -10,9 +10,11 @@ namespace TypographyBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly IStoreStorage _storeStorage;
+        public OrderLogic(IOrderStorage orderStorage, IStoreStorage storeStorage)
         {
             _orderStorage = orderStorage;
+            _storeStorage = storeStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -52,6 +54,11 @@ namespace TypographyBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
+            if (!_storeStorage.CheckPrintedsByComponents(order.PrintedId, order.Count))
+            {
+                throw new Exception("Недостаточно компонентов на складах");
+            }
+            _storeStorage.Extract(order.PrintedId, order.Count);
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,

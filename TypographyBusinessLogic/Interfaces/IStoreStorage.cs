@@ -13,5 +13,7 @@ namespace TypographyBusinessLogic.Interfaces
 		void Insert(StoreBindingModel model);
 		void Update(StoreBindingModel model);
 		void Delete(StoreBindingModel model);
+		bool CheckPrintedsByComponents(int PrintedId, int Count);
+		void Extract(int PrintedId, int Count);
 	}
 }
