@@ -16,5 +16,7 @@ namespace TypographyDatabaseImplement.Models
         public string Password { set; get; }
         [ForeignKey("ClientId")]
         public virtual List<Order> Orders { set; get; }
+        [ForeignKey("ClientId")]
+        public List<MessageInfo> Messages { get; set; }
     }
 }

@@ -172,5 +172,11 @@ namespace TypographyView
             _workModeling.DoWork();
             LoadData();
         }
+
+        private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMessages>();
+            form.ShowDialog();
+        }
     }
 }
