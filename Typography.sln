@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyBusinessLogic", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyListImplement", "TypographyListImplement\TypographyListImplement.csproj", "{86CE7C85-6E26-4F04-B007-5131EC64CEF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyFileImplement", "TypographyFileImplement\TypographyFileImplement.csproj", "{5F23037F-1372-4EC8-B8FD-E23083FE0546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyFileImplement", "TypographyFileImplement\TypographyFileImplement.csproj", "{5F23037F-1372-4EC8-B8FD-E23083FE0546}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyDatabaseImplement", "TypographyDatabaseImplement\TypographyDatabaseImplement.csproj", "{15E744AE-AE1A-484D-9755-B330B58B88DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5F23037F-1372-4EC8-B8FD-E23083FE0546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F23037F-1372-4EC8-B8FD-E23083FE0546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F23037F-1372-4EC8-B8FD-E23083FE0546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
