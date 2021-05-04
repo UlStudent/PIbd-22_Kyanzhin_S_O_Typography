@@ -86,10 +86,15 @@ namespace TypographyView
             }
             try
             {
+                int count = Convert.ToInt32(textBoxCount.Text);
+                if (count < 1)
+                {
+                    throw new Exception("Количество должно быть > 0");
+                }
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
                     PrintedId = Convert.ToInt32(comboBoxPrinted.SelectedValue),
-                    Count = Convert.ToInt32(textBoxCount.Text),
+                    Count = count,
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
