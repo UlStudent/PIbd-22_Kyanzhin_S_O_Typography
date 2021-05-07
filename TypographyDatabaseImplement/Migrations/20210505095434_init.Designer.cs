@@ -10,8 +10,8 @@ using TypographyDatabaseImplement;
 namespace TypographyDatabaseImplement.Migrations
 {
     [DbContext(typeof(TypographyDatabase))]
-    [Migration("20210309120026_InitialCreateThree")]
-    partial class InitialCreateThree
+    [Migration("20210505095434_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,9 +113,57 @@ namespace TypographyDatabaseImplement.Migrations
                     b.ToTable("PrintedComponents");
                 });
 
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.Store", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponsibleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stores");
+                });
+
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.StoreComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("StoreComponents");
+                });
+
             modelBuilder.Entity("TypographyDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "printed")
+                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printed")
                         .WithMany("Orders")
                         .HasForeignKey("PrintedId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -130,9 +178,24 @@ namespace TypographyDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "printed")
+                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printed")
                         .WithMany("PrintedComponents")
                         .HasForeignKey("PrintedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.StoreComponent", b =>
+                {
+                    b.HasOne("TypographyDatabaseImplement.Models.Component", "Component")
+                        .WithMany("StoreComponents")
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TypographyDatabaseImplement.Models.Store", "Store")
+                        .WithMany("StoreComponents")
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
