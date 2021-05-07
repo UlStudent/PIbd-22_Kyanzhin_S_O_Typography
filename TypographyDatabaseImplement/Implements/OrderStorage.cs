@@ -84,7 +84,7 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                var order = context.Orders
+                var order = context.Orders.Include(rec => rec.Printed)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
