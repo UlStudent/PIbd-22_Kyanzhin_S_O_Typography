@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using TypographyBusinessLogic.Attributes;
 
 namespace TypographyBusinessLogic.ViewModels
 {
     public class PrintedViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Название изделия")]
+        [Column(title: "Название изделия", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string PrintedName { get; set; }
-        [DisplayName("Цена")]
+        [Column(title: "Цена", width: 50)]
         public decimal Price { get; set; }
         public Dictionary<int, (string, int)> PrintedComponents { get; set; }
 

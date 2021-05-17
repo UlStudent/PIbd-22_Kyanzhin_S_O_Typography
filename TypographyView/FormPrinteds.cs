@@ -6,8 +6,8 @@ using Unity;
 
 namespace TypographyView
 {
-	public partial class FormPrinteds : Form
-	{
+    public partial class FormPrinteds : Form
+    {
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly PrintedLogic logic;
@@ -24,16 +24,7 @@ namespace TypographyView
         {
             try
             {
-
-                var list = logic.Read(null);
-                if (list != null)
-                {
-                    dataGridView.DataSource = list;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
-                    dataGridView.Columns[1].AutoSizeMode =
-                    DataGridViewAutoSizeColumnMode.Fill;
-                }
+                Program.ConfigGrid(logic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {
@@ -41,7 +32,7 @@ namespace TypographyView
                MessageBoxIcon.Error);
             }
         }
-        
+
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormPrinted>();
@@ -50,7 +41,7 @@ namespace TypographyView
                 LoadData();
             }
         }
-        
+
         private void ButtonUpd_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
