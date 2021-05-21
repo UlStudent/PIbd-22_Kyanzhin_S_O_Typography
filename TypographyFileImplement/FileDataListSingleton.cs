@@ -54,7 +54,7 @@ namespace TypographyFileImplement
                     list.Add(new Component
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        ComponentName = elem.Element("ComponentName").Value
+                        ComponentName = elem.Element("PrintedName").Value
                     });
                 }
             }
@@ -147,7 +147,7 @@ namespace TypographyFileImplement
                 {
                     xElement.Add(new XElement("Component",
                     new XAttribute("Id", component.Id),
-                    new XElement("ComponentName", component.ComponentName)));
+                    new XElement("PrintedName", component.ComponentName)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(ComponentFileName);
