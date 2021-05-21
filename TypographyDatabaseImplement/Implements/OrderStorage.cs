@@ -2,10 +2,11 @@
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
 using TypographyDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace TypographyDatabaseImplement.Implements
 {
@@ -15,19 +16,18 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                return context.Orders.Include(rec => rec.Printed)
+                return context.Orders.Include(rec => rec.Printeds)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     PrintedId = rec.PrintedId,
-                    PrintedName = context.Printeds.FirstOrDefault(pr => pr.Id == rec.PrintedId).PrintedName,
+                    PrintedName = rec.Printeds.PrintedName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                })
-                .ToList();
+                }).ToList();
             }
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -38,20 +38,20 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                return context.Orders.Include(rec => rec.Printed)
-                .Where(rec => rec.PrintedId == model.PrintedId)
+                return context.Orders
+                .Include(rec => rec.Printeds)
+                .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     PrintedId = rec.PrintedId,
-                    PrintedName = context.Printeds.FirstOrDefault(pr => pr.Id == rec.PrintedId).PrintedName,
+                    PrintedName = rec.Printeds.PrintedName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                })
-                .ToList();
+                }).ToList();
             }
         }
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -62,21 +62,20 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                var order = context.Orders.Include(rec => rec.Printed)
+                var order = context.Orders.Include(rec => rec.Printeds)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
                     PrintedId = order.PrintedId,
-                    PrintedName = context.Printeds.FirstOrDefault(rec => rec.Id == order.PrintedId)?.PrintedName,
+                    PrintedName = order.Printeds.PrintedName,
                     Count = order.Count,
                     Sum = order.Sum,
                     Status = order.Status,
                     DateCreate = order.DateCreate,
                     DateImplement = order.DateImplement,
-                } :
-                null;
+                } : null;
             }
         }
         public void Insert(OrderBindingModel model)

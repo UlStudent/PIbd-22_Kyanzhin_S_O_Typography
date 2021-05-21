@@ -5,6 +5,7 @@ using TypographyDatabaseImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace TypographyDatabaseImplement.Implements
 {
@@ -14,21 +15,16 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                return context.Components
-                .Select(rec => new ComponentViewModel
+                return context.Components.Select(rec => new ComponentViewModel
                 {
                     Id = rec.Id,
                     ComponentName = rec.ComponentName
-                })
-               .ToList();
+                }).ToList();
             }
         }
         public List<ComponentViewModel> GetFilteredList(ComponentBindingModel model)
         {
-            if (model == null)
-            {
-                return null;
-            }
+            if (model == null) return null;
             using (var context = new TypographyDatabase())
             {
                 return context.Components
@@ -37,8 +33,7 @@ namespace TypographyDatabaseImplement.Implements
                {
                    Id = rec.Id,
                    ComponentName = rec.ComponentName
-               })
-                .ToList();
+               }).ToList();
             }
         }
         public ComponentViewModel GetElement(ComponentBindingModel model)
@@ -50,15 +45,13 @@ namespace TypographyDatabaseImplement.Implements
             using (var context = new TypographyDatabase())
             {
                 var component = context.Components
-                .FirstOrDefault(rec => rec.ComponentName == model.ComponentName ||
-               rec.Id == model.Id);
+                .FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
                 return component != null ?
                 new ComponentViewModel
                 {
                     Id = component.Id,
                     ComponentName = component.ComponentName
-                } :
-               null;
+                } : null;
             }
         }
         public void Insert(ComponentBindingModel model)
@@ -73,10 +66,9 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                var element = context.Components.FirstOrDefault(rec => rec.Id ==
-               model.Id);
+                var element = context.Components.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
-            {
+                {
                     throw new Exception("Элемент не найден");
                 }
                 CreateModel(model, element);
@@ -87,8 +79,7 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                Component element = context.Components.FirstOrDefault(rec => rec.Id ==
-               model.Id);
+                Component element = context.Components.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element != null)
                 {
                     context.Components.Remove(element);

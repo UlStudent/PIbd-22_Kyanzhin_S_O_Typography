@@ -1,6 +1,8 @@
 ﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.Interfaces
 {
@@ -12,6 +14,6 @@ namespace TypographyBusinessLogic.Interfaces
         void Insert(ComponentBindingModel model);
         void Update(ComponentBindingModel model);
         void Delete(ComponentBindingModel model);
-
     }
+
 }

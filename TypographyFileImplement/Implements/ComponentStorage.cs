@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
 using TypographyFileImplement.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace TypographyFileImplement.Implements
 {
@@ -17,52 +18,41 @@ namespace TypographyFileImplement.Implements
         }
         public List<ComponentViewModel> GetFullList()
         {
-            return source.Components
-            .Select(CreateModel)
-           .ToList();
+            return source.Components.Select(CreateModel).ToList();
         }
         public List<ComponentViewModel> GetFilteredList(ComponentBindingModel model)
         {
-            if (model == null)
-            {
-                return null;
-            }
+            if (model == null) return null;
+
             return source.Components
             .Where(rec => rec.ComponentName.Contains(model.ComponentName))
-           .Select(CreateModel)
+            .Select(CreateModel)
             .ToList();
         }
         public ComponentViewModel GetElement(ComponentBindingModel model)
         {
-            if (model == null)
-            {
-                return null;
-            }
+            if (model == null) return null;
             var component = source.Components
-            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName ||
-           rec.Id == model.Id);
+            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
             return component != null ? CreateModel(component) : null;
         }
         public void Insert(ComponentBindingModel model)
         {
-            int maxId = source.Components.Count > 0 ? source.Components.Max(rec =>
-           rec.Id) : 0;
+            int maxId = source.Components.Count > 0 ? source.Components.Max(rec => rec.Id) : 0;
             var element = new Component { Id = maxId + 1 };
             source.Components.Add(CreateModel(model, element));
         }
         public void Update(ComponentBindingModel model)
         {
             var element = source.Components.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
-            {
-                throw new Exception("Элемент не найден");
-            }
+
+            if (element == null)throw new Exception("Элемент не найден");
+
             CreateModel(model, element);
         }
         public void Delete(ComponentBindingModel model)
         {
-            Component element = source.Components.FirstOrDefault(rec => rec.Id ==
-           model.Id);
+            Component element = source.Components.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 source.Components.Remove(element);
@@ -86,5 +76,4 @@ namespace TypographyFileImplement.Implements
             };
         }
     }
-
 }

@@ -39,20 +39,17 @@ namespace TypographyView
             // 
             // dataGridView
             // 
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(0, 0);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(563, 423);
+            this.dataGridView.Size = new System.Drawing.Size(532, 450);
             this.dataGridView.TabIndex = 0;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(597, 33);
+            this.buttonAdd.Location = new System.Drawing.Point(549, 12);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(98, 30);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -60,9 +57,9 @@ namespace TypographyView
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(597, 95);
+            this.buttonUpdate.Location = new System.Drawing.Point(549, 51);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(98, 30);
+            this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
             this.buttonUpdate.TabIndex = 2;
             this.buttonUpdate.Text = "Изменить";
             this.buttonUpdate.UseVisualStyleBackColor = true;
@@ -70,9 +67,9 @@ namespace TypographyView
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(597, 158);
+            this.buttonDelete.Location = new System.Drawing.Point(549, 89);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(98, 30);
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 3;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.UseVisualStyleBackColor = true;
@@ -80,9 +77,9 @@ namespace TypographyView
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(597, 220);
+            this.buttonRefresh.Location = new System.Drawing.Point(549, 128);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(98, 30);
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
             this.buttonRefresh.TabIndex = 4;
             this.buttonRefresh.Text = "Обновить";
             this.buttonRefresh.UseVisualStyleBackColor = true;
@@ -92,7 +89,7 @@ namespace TypographyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 423);
+            this.ClientSize = new System.Drawing.Size(636, 450);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonUpdate);

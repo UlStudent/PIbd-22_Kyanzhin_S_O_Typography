@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.Enums;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.BusinessLogics
 {
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        private readonly IStoreStorage _storeStorage;
-        public OrderLogic(IOrderStorage orderStorage, IStoreStorage storeStorage)
+        private readonly IPrintedStorage _printedStorage;
+        private readonly IWarehouseStorage _warehouseStorage;
+        public OrderLogic(IOrderStorage orderStorage, IPrintedStorage printedStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
-            _storeStorage = storeStorage;
+            _printedStorage = printedStorage;
+            _warehouseStorage = warehouseStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -41,11 +44,8 @@ namespace TypographyBusinessLogic.BusinessLogics
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            var order = _orderStorage.GetElement(new OrderBindingModel
-            {
-                Id =
-           model.OrderId
-            });
+            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
@@ -54,11 +54,10 @@ namespace TypographyBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            if (!_storeStorage.CheckPrintedsByComponents(order.PrintedId, order.Count))
+            if (!_warehouseStorage.IsTaked(_printedStorage.GetElement(new PrintedBindingModel { Id = order.PrintedId }).PrintedComponents, order.Count))
             {
-                throw new Exception("Недостаточно компонентов на складах");
+                throw new Exception("Недостаточно материалов");
             }
-            _storeStorage.Extract(order.PrintedId, order.Count);
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
@@ -72,11 +71,7 @@ namespace TypographyBusinessLogic.BusinessLogics
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
-            var order = _orderStorage.GetElement(new OrderBindingModel
-            {
-                Id =
-           model.OrderId
-            });
+            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
@@ -118,6 +113,6 @@ namespace TypographyBusinessLogic.BusinessLogics
                 Status = OrderStatus.Оплачен
             });
         }
-
     }
+
 }

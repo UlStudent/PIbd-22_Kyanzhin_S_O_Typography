@@ -111,30 +111,30 @@ namespace TypographyDatabaseImplement.Migrations
                     b.ToTable("PrintedComponents");
                 });
 
-            modelBuilder.Entity("TypographyDatabaseImplement.Models.Store", b =>
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.Warehouse", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateCreation")
+                    b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ResponsibleName")
+                    b.Property<string>("ResponsiblePerson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StoreName")
+                    b.Property<string>("WarehouseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Warehouses");
                 });
 
-            modelBuilder.Entity("TypographyDatabaseImplement.Models.StoreComponent", b =>
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.WarehouseComponent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,21 +147,21 @@ namespace TypographyDatabaseImplement.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("StoreId")
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ComponentId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("WarehouseId");
 
-                    b.ToTable("StoreComponents");
+                    b.ToTable("WarehouseComponents");
                 });
 
             modelBuilder.Entity("TypographyDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printed")
+                    b.HasOne("TypographyDatabaseImplement.Models.Printed", "Printeds")
                         .WithMany("Orders")
                         .HasForeignKey("PrintedId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -183,17 +183,17 @@ namespace TypographyDatabaseImplement.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TypographyDatabaseImplement.Models.StoreComponent", b =>
+            modelBuilder.Entity("TypographyDatabaseImplement.Models.WarehouseComponent", b =>
                 {
                     b.HasOne("TypographyDatabaseImplement.Models.Component", "Component")
-                        .WithMany("StoreComponents")
+                        .WithMany("WarehouseComponents")
                         .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TypographyDatabaseImplement.Models.Store", "Store")
-                        .WithMany("StoreComponents")
-                        .HasForeignKey("StoreId")
+                    b.HasOne("TypographyDatabaseImplement.Models.Warehouse", "Warehouse")
+                        .WithMany("WarehouseComponents")
+                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

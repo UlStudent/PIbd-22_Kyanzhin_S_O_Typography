@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.BusinessLogics
 {

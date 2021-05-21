@@ -1,7 +1,14 @@
-﻿using System;
-using System.Windows.Forms;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.BusinessLogics;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Unity;
 
 namespace TypographyView
@@ -25,15 +32,11 @@ namespace TypographyView
                 try
                 {
                     var view = logic.Read(new ComponentBindingModel { Id = id })?[0];
-                    if (view != null)
-                    {
-                        textBoxName.Text = view.ComponentName;
-                    }
+                    if (view != null) textBoxName.Text = view.ComponentName;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -41,8 +44,7 @@ namespace TypographyView
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -52,15 +54,13 @@ namespace TypographyView
                     Id = id,
                     ComponentName = textBoxName.Text
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ButtonCancel_Click(object sender, EventArgs e)
@@ -70,5 +70,4 @@ namespace TypographyView
         }
 
     }
-
 }

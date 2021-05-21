@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
 using TypographyListImplement.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyListImplement.Implements
 {
     public class OrderStorage : IOrderStorage
     {
-       private readonly DataListSingleton source;
+        private readonly DataListSingleton source;
 
         public OrderStorage()
         {
@@ -48,9 +48,9 @@ namespace TypographyListImplement.Implements
             if (model == null) return null;
 
             List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var order in source.Orders)
+            foreach (Order order in source.Orders)
             {
-                if (order.Id.Equals(model.Id))
+                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                 {
                     result.Add(CreateModel(order));
                 }
@@ -111,24 +111,24 @@ namespace TypographyListImplement.Implements
         private OrderViewModel CreateModel(Order order)
         {
             string printedName = null;
-            foreach (var document in source.Printeds)
+            foreach (var item in source.Printeds)
             {
-                if (document.Id == order.Id)
+                if (item.Id == order.PrintedId)
                 {
-                    printedName = document.PrintedName;
+                    printedName = item.PrintedName;
                 }
             }
             return new OrderViewModel
             {
                 Id = order.Id,
                 PrintedId = order.PrintedId,
-                PrintedName = source.Printeds.FirstOrDefault(p => p.Id == order.PrintedId)?.PrintedName,
+                PrintedName = printedName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement
             };
-        } 
+        }
     }
 }

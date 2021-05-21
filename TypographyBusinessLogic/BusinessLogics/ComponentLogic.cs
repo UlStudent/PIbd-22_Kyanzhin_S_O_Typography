@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.Interfaces;
 using TypographyBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.BusinessLogics
 {
@@ -22,17 +22,13 @@ namespace TypographyBusinessLogic.BusinessLogics
             }
             if (model.Id.HasValue)
             {
-                return new List<ComponentViewModel> { _componentStorage.GetElement(model)
-};
+                return new List<ComponentViewModel> { _componentStorage.GetElement(model) };
             }
             return _componentStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(ComponentBindingModel model)
         {
-            var element = _componentStorage.GetElement(new ComponentBindingModel
-            {
-                ComponentName = model.ComponentName
-            });
+            var element = _componentStorage.GetElement(new ComponentBindingModel { ComponentName = model.ComponentName });
             if (element != null && element.Id != model.Id)
             {
                 throw new Exception("Уже есть компонент с таким названием");
@@ -55,6 +51,5 @@ namespace TypographyBusinessLogic.BusinessLogics
             }
             _componentStorage.Delete(model);
         }
-
     }
 }

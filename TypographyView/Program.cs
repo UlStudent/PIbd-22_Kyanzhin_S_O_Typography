@@ -1,7 +1,7 @@
-﻿using System;
-using TypographyBusinessLogic.BusinessLogics;
+﻿using TypographyBusinessLogic.BusinessLogics;
 using TypographyBusinessLogic.Interfaces;
 using TypographyDatabaseImplement.Implements;
+using System;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
@@ -27,11 +27,13 @@ namespace TypographyView
             currentContainer.RegisterType<IComponentStorage, ComponentStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderStorage, OrderStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IPrintedStorage, PrintedStorage>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IStoreStorage, StoreStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<PrintedLogic>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<StoreLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<WarehouseLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
+
             return currentContainer;
         }
     }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using TypographyBusinessLogic.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using TypographyBusinessLogic.Enums;
 
 namespace TypographyListImplement.Models
 {
