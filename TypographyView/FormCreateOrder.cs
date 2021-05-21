@@ -1,9 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.BusinessLogics;
 using TypographyBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Unity;
 
 namespace TypographyView
@@ -27,38 +33,31 @@ namespace TypographyView
                 var list = _logicP.Read(null);
                 if (list != null)
                 {
-                    comboBoxPrinted.DataSource = list;
-                    comboBoxPrinted.DisplayMember = "PrintedName";
-                    comboBoxPrinted.ValueMember = "Id";
-                    comboBoxPrinted.SelectedItem = null;
+                    comboBoxProduct.DataSource = list;
+                    comboBoxProduct.DisplayMember = "PrintedName";
+                    comboBoxProduct.ValueMember = "Id";
+                    comboBoxProduct.SelectedItem = null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void CalcSum()
         {
-            if (comboBoxPrinted.SelectedValue != null &&
-           !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxProduct.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
-                    int id = Convert.ToInt32(comboBoxPrinted.SelectedValue);
-                    PrintedViewModel printed = _logicP.Read(new PrintedBindingModel
-                    {
-                        Id
-                    = id
-                    })?[0];
+                    int id = Convert.ToInt32(comboBoxProduct.SelectedValue);
+                    PrintedViewModel product = _logicP.Read(new PrintedBindingModel { Id = id })?[0];
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * printed?.Price ?? 0).ToString();
+                    textBoxSum.Text = (count * product?.Price ?? 0).ToString();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
             }
         }
@@ -66,7 +65,7 @@ namespace TypographyView
         {
             CalcSum();
         }
-        private void ComboBoxPrinted_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalcSum();
         }
@@ -74,38 +73,29 @@ namespace TypographyView
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка",
-               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (comboBoxPrinted.SelectedValue == null)
+            if (comboBoxProduct.SelectedValue == null)
             {
-                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
-                int count = Convert.ToInt32(textBoxCount.Text);
-                if (count < 1)
-                {
-                    throw new Exception("Количество должно быть > 0");
-                }
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
-                    PrintedId = Convert.ToInt32(comboBoxPrinted.SelectedValue),
-                    Count = count,
+                    PrintedId = Convert.ToInt32(comboBoxProduct.SelectedValue),
+                    Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ButtonCancel_Click(object sender, EventArgs e)

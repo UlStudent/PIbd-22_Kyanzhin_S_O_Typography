@@ -4,10 +4,12 @@ using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using System.Collections.Generic;
 
+
 namespace TypographyBusinessLogic.BusinessLogics
 {
     class SaveToPdf
     {
+        [System.Obsolete]
         public static void CreateDoc(PdfInfo info)
         {
             Document document = new Document();
@@ -22,7 +24,8 @@ namespace TypographyBusinessLogic.BusinessLogics
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm"};
+            List<string> columns = new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm"
+};
             foreach (var elem in columns)
             {
                 table.AddColumn(elem);
@@ -39,19 +42,71 @@ namespace TypographyBusinessLogic.BusinessLogics
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
-                    Texts = new List<string> { order.DateCreate.ToShortDateString(), order.PrintedName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToString()
+                    Texts = new List<string> { order.DateCreate.ToShortDateString(),
+order.PrintedName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToString()
 },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
                 });
             }
-            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true,
+           PdfSharp.Pdf.PdfFontEmbedding.Always)
             {
                 Document = document
             };
             renderer.RenderDocument();
             renderer.PdfDocument.Save(info.FileName);
         }
+
+        [System.Obsolete]
+        public static void CreateDocOrdersAllDates(PdfInfoOrdersAllDates info)
+        {
+            Document document = new Document();
+            DefineStyles(document);
+
+            Section section = document.AddSection();
+
+            Paragraph paragraph = section.AddParagraph(info.Title);
+            paragraph.Format.SpaceAfter = "1cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.Style = "NormalTitle";
+
+            var table = document.LastSection.AddTable();
+            List<string> columns = new List<string> { "6cm", "6cm", "5cm" };
+            foreach (var elem in columns)
+            {
+                table.AddColumn(elem);
+            }
+
+            CreateRow(new PdfRowParameters
+            {
+                Table = table,
+                Texts = new List<string> { "Дата", "Количество заказов", "Сумма" },
+                Style = "NormalTitle",
+                ParagraphAlignment = ParagraphAlignment.Center
+            });
+
+            foreach (var order in info.Orders)
+            {
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = new List<string> { order.Date.ToShortDateString(),
+                        order.Count.ToString(), order.Sum.ToString()},
+                    Style = "Normal",
+                    ParagraphAlignment = ParagraphAlignment.Left
+                });
+            }
+
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
+            {
+                Document = document
+            };
+
+            renderer.RenderDocument();
+            renderer.PdfDocument.Save(info.FileName);
+        }
+
         /// <summary>
         /// Создание стилей для документа
         /// </summary>
@@ -70,7 +125,6 @@ namespace TypographyBusinessLogic.BusinessLogics
         /// <param name="rowParameters"></param>
         private static void CreateRow(PdfRowParameters rowParameters)
         {
-
             Row row = rowParameters.Table.AddRow();
             for (int i = 0; i < rowParameters.Texts.Count; ++i)
             {

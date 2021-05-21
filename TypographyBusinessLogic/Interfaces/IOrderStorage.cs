@@ -1,8 +1,8 @@
-﻿using System;
+﻿using TypographyBusinessLogic.BindingModels;
+using TypographyBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using TypographyBusinessLogic.BindingModels;
-using TypographyBusinessLogic.ViewModels;
 
 namespace TypographyBusinessLogic.Interfaces
 {
@@ -14,6 +14,5 @@ namespace TypographyBusinessLogic.Interfaces
         void Insert(OrderBindingModel model);
         void Update(OrderBindingModel model);
         void Delete(OrderBindingModel model);
-
     }
 }

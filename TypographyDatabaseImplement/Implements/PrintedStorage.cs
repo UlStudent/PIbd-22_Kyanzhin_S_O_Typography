@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace TypographyDatabaseImplement.Implements
 {
@@ -33,10 +34,8 @@ namespace TypographyDatabaseImplement.Implements
         }
         public List<PrintedViewModel> GetFilteredList(PrintedBindingModel model)
         {
-            if (model == null)
-            {
-                return null;
-            }
+            if (model == null) return null;
+
             using (var context = new TypographyDatabase())
             {
                 return context.Printeds
@@ -64,22 +63,20 @@ namespace TypographyDatabaseImplement.Implements
             }
             using (var context = new TypographyDatabase())
             {
-                var printed = context.Printeds
+                var product = context.Printeds
                 .Include(rec => rec.PrintedComponents)
                .ThenInclude(rec => rec.Component)
-               .FirstOrDefault(rec => rec.PrintedName == model.PrintedName || rec.Id
-               == model.Id);
-                return printed != null ?
+               .FirstOrDefault(rec => rec.PrintedName == model.PrintedName || rec.Id == model.Id);
+                return product != null ?
                 new PrintedViewModel
                 {
-                    Id = printed.Id,
-                    PrintedName = printed.PrintedName,
-                    Price = printed.Price,
-                    PrintedComponents = printed.PrintedComponents
+                    Id = product.Id,
+                    PrintedName = product.PrintedName,
+                    Price = product.Price,
+                    PrintedComponents = product.PrintedComponents
                 .ToDictionary(recPC => recPC.ComponentId, recPC =>
                (recPC.Component?.ComponentName, recPC.Count))
-                } :
-               null;
+                } : null;
             }
         }
         public void Insert(PrintedBindingModel model)
@@ -90,15 +87,7 @@ namespace TypographyDatabaseImplement.Implements
                 {
                     try
                     {
-                        Printed printed = new Printed
-                        {
-                            PrintedName = model.PrintedName,
-                            Price = model.Price
-                        };
-                        context.Printeds.Add(printed);
-                        context.SaveChanges();
-                        CreateModel(model, printed, context);
-                        context.SaveChanges();
+                        CreateModel(model, new Printed(), context);
                         transaction.Commit();
                     }
                     catch
@@ -117,14 +106,12 @@ namespace TypographyDatabaseImplement.Implements
                 {
                     try
                     {
-                        var element = context.Printeds.FirstOrDefault(rec => rec.Id ==
-                       model.Id);
+                        var element = context.Printeds.FirstOrDefault(rec => rec.Id == model.Id);
                         if (element == null)
                         {
                             throw new Exception("Элемент не найден");
                         }
                         CreateModel(model, element, context);
-                        context.SaveChanges();
                         transaction.Commit();
                     }
                     catch
@@ -139,8 +126,7 @@ namespace TypographyDatabaseImplement.Implements
         {
             using (var context = new TypographyDatabase())
             {
-                Printed element = context.Printeds.FirstOrDefault(rec => rec.Id ==
-               model.Id);
+                Printed element = context.Printeds.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element != null)
                 {
                     context.Printeds.Remove(element);
@@ -152,9 +138,15 @@ namespace TypographyDatabaseImplement.Implements
                 }
             }
         }
-        private Printed CreateModel(PrintedBindingModel model, Printed printed,
-       TypographyDatabase context)
+        private Printed CreateModel(PrintedBindingModel model, Printed printed, TypographyDatabase context)
         {
+            printed.PrintedName = model.PrintedName;
+            printed.Price = model.Price;
+            if (printed.Id == 0)
+            {
+                context.Printeds.Add(printed);
+                context.SaveChanges();
+            }
             if (model.Id.HasValue)
             {
                 var printedComponents = context.PrintedComponents.Where(rec =>
@@ -166,8 +158,7 @@ namespace TypographyDatabaseImplement.Implements
                 // обновили количество у существующих записей
                 foreach (var updateComponent in printedComponents)
                 {
-                    updateComponent.Count =
-                   model.PrintedComponents[updateComponent.ComponentId].Item2;
+                    updateComponent.Count = model.PrintedComponents[updateComponent.ComponentId].Item2;
                     model.PrintedComponents.Remove(updateComponent.ComponentId);
                 }
                 context.SaveChanges();

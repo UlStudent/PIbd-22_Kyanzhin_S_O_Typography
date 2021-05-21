@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyView", "TypographyView\TypographyView.csproj", "{833018B2-15D8-4AA5-865E-A63F7B911C2F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyBusinessLogic", "TypographyBusinessLogic\TypographyBusinessLogic.csproj", "{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyListImplement", "TypographyListImplement\TypographyListImplement.csproj", "{86CE7C85-6E26-4F04-B007-5131EC64CEF2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyFileImplement", "TypographyFileImplement\TypographyFileImplement.csproj", "{5F23037F-1372-4EC8-B8FD-E23083FE0546}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyDatabaseImplement", "TypographyDatabaseImplement\TypographyDatabaseImplement.csproj", "{15E744AE-AE1A-484D-9755-B330B58B88DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypographyDatabaseImplement", "TypographyDatabaseImplement\TypographyDatabaseImplement.csproj", "{15E744AE-AE1A-484D-9755-B330B58B88DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographyView", "TypographyView\TypographyView.csproj", "{FA295E8D-3860-48F1-B094-97003D6A051C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{833018B2-15D8-4AA5-865E-A63F7B911C2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64C416D2-1DE6-4B38-97FB-BB69DA9367D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E744AE-AE1A-484D-9755-B330B58B88DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA295E8D-3860-48F1-B094-97003D6A051C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA295E8D-3860-48F1-B094-97003D6A051C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA295E8D-3860-48F1-B094-97003D6A051C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA295E8D-3860-48F1-B094-97003D6A051C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

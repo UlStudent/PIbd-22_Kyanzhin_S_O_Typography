@@ -1,5 +1,7 @@
-﻿using System;
-using TypographyBusinessLogic.Enums;
+﻿using TypographyBusinessLogic.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.ViewModels
 {

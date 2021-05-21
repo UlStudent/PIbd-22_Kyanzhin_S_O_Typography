@@ -1,6 +1,8 @@
 ﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TypographyBusinessLogic.HelperModels
 {
@@ -9,6 +11,9 @@ namespace TypographyBusinessLogic.HelperModels
         public Table Table { get; set; }
         public List<string> Texts { get; set; }
         public string Style { get; set; }
-        public ParagraphAlignment ParagraphAlignment { get; set; }
+        public ParagraphAlignment ParagraphAlignment
+        {
+            get; set;
+        }
     }
 }

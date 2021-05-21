@@ -1,7 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace TypographyDatabaseImplement.Models
 {
+    /// <summary>
+    /// Сколько компонентов, требуется при изготовлении изделия
+    /// </summary>
     public class PrintedComponent
     {
         public int Id { get; set; }

@@ -1,9 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using TypographyBusinessLogic.BindingModels;
+﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.BusinessLogics;
-using TypographyBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Unity;
 
 namespace TypographyView
@@ -35,12 +40,12 @@ namespace TypographyView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void КомпонентыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +58,33 @@ namespace TypographyView
             var form = Container.Resolve<FormPrinteds>();
             form.ShowDialog();
         }
+
+        private void ComponentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _report.SavePrintedsToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void ComponentProductsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportPrintedComponents>();
+            form.ShowDialog();
+        }
+        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
@@ -66,17 +98,12 @@ namespace TypographyView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
-                    {
-                        OrderId =
-                   id
-                    });
+                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
                     LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -87,16 +114,12 @@ namespace TypographyView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    _orderLogic.FinishOrder(new ChangeStatusBindingModel
-                    {
-                        OrderId = id
-                    });
+                    _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = id });
                     LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -112,8 +135,7 @@ namespace TypographyView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -121,42 +143,43 @@ namespace TypographyView
         {
             LoadData();
         }
-        private void СкладыToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void warehouseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormStores>();
-            form.ShowDialog();
-        }
-        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormFillStore>();
+            FormWarehouses form = Container.Resolve<FormWarehouses>();
             form.ShowDialog();
         }
 
-        private void компонентыПоИзделиямToolStripMenuItem_Click(object sender, EventArgs e)
+        private void warehouseFillToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormReportPrintedComponents>();
+            FormWarehouseFill form = Container.Resolve<FormWarehouseFill>();
             form.ShowDialog();
         }
 
-        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        private void списокСкладовПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormReportOrders>();
+            var form = Container.Resolve<FormReportWarehouseComponents>();
             form.ShowDialog();
         }
 
-        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+        private void списокЗаказовЗаВсеДатыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrdersAllDates>();
+            form.ShowDialog();
+        }
+
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    _report.SavePrintedsToWordFile(new ReportBindingModel
+                    _report.SaveWarehousesToWordFile(new ReportBindingModel
                     {
-                        FileName =
-                   dialog.FileName
+                        FileName = dialog.FileName
                     });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
+
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

@@ -1,12 +1,15 @@
 ﻿using TypographyBusinessLogic.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace TypographyDatabaseImplement.Models
 {
     public class Order
     {
         public int Id { get; set; }
+        public int PrintedId { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]
@@ -16,7 +19,6 @@ namespace TypographyDatabaseImplement.Models
         [Required]
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
-        public int PrintedId { get; set; }
-        public virtual Printed Printed { get; set; }
+        public virtual Printed Printeds { get; set; }
     }
 }

@@ -1,10 +1,16 @@
-﻿using TypographyBusinessLogic.BindingModels;
-using TypographyBusinessLogic.BusinessLogics;
-using Microsoft.Reporting.WinForms;
+﻿using TypographyBusinessLogic.BusinessLogics;
 using System;
+using Microsoft.Reporting.WinForms;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
-
+using TypographyBusinessLogic.BindingModels;
 
 namespace TypographyView
 {
@@ -17,6 +23,11 @@ namespace TypographyView
         {
             InitializeComponent();
             this.logic = logic;
+        }
+
+        private void FormClientOrders_Load(object sender, EventArgs e)
+        {
+            this.reportViewer.RefreshReport();
         }
         private void ButtonMake_Click(object sender, EventArgs e)
         {
@@ -39,8 +50,7 @@ namespace TypographyView
                     DateFrom = dateTimePickerFrom.Value,
                     DateTo = dateTimePickerTo.Value
                 });
-                ReportDataSource source = new ReportDataSource("DataSetOrders",
-               dataSource);
+                ReportDataSource source = new ReportDataSource("DataSetOrders", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();
             }
@@ -50,6 +60,8 @@ namespace TypographyView
                MessageBoxIcon.Error);
             }
         }
+
+        [Obsolete]
         private void ButtonToPdf_Click(object sender, EventArgs e)
         {
             if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
@@ -80,12 +92,6 @@ namespace TypographyView
                     }
                 }
             }
-        }
-
-        private void FormReportOrders_Load(object sender, EventArgs e)
-        {
-
-            this.reportViewer.RefreshReport();
         }
     }
 }

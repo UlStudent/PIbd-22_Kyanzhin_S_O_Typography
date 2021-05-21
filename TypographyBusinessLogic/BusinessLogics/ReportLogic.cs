@@ -5,50 +5,49 @@ using TypographyBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace TypographyBusinessLogic.BusinessLogics
 {
     public class ReportLogic
     {
-        private readonly IComponentStorage _componentStorage;
         private readonly IPrintedStorage _printedStorage;
         private readonly IOrderStorage _orderStorage;
-        public ReportLogic(IPrintedStorage printedStorage, IComponentStorage
-       componentStorage, IOrderStorage orderStorage)
+        private readonly IComponentStorage _componentStorage;
+        private readonly IWarehouseStorage _warehouseStorage;
+        public ReportLogic(IPrintedStorage printedStorage, IOrderStorage orderStorage, IComponentStorage componentStorage, IWarehouseStorage warehouseStorage)
         {
             _printedStorage = printedStorage;
-            _componentStorage = componentStorage;
             _orderStorage = orderStorage;
+            _componentStorage = componentStorage;
+            _warehouseStorage = warehouseStorage;
         }
         /// <summary>
         /// Получение списка компонент с указанием, в каких изделиях используются
         /// </summary>
-        /// <returns></returns>104
+        /// <returns></returns>
         public List<ReportPrintedComponentViewModel> GetPrintedComponent()
         {
-            var components = _componentStorage.GetFullList();
-            var planes = _printedStorage.GetFullList();
+            var printeds = _printedStorage.GetFullList();
             var list = new List<ReportPrintedComponentViewModel>();
-            foreach (var plane in planes)
+            foreach (var printed in printeds)
             {
                 var record = new ReportPrintedComponentViewModel
                 {
                     PrintedComponents = new List<Tuple<string, int>>(),
                     TotalCount = 0,
-                    PrintedName = plane.PrintedName
+                    PrintedName = printed.PrintedName
                 };
-                foreach (var component in components)
+                foreach (var component in printed.PrintedComponents)
                 {
-                    if (plane.PrintedComponents.ContainsKey(component.Id))
-                    {
-                        record.PrintedComponents.Add(new Tuple<string, int>(component.ComponentName, plane.PrintedComponents[component.Id].Item2));
-                        record.TotalCount += plane.PrintedComponents[component.Id].Item2;
-                    }
+                    record.PrintedComponents.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
             }
             return list;
         }
+
         /// <summary>
         /// Получение списка заказов за определенный период
         /// </summary>
@@ -58,19 +57,50 @@ namespace TypographyBusinessLogic.BusinessLogics
         {
             return _orderStorage.GetFilteredList(new OrderBindingModel
             {
-                DateFrom =
-           model.DateFrom,
+                DateFrom = model.DateFrom,
                 DateTo = model.DateTo
-            })
-            .Select(x => new ReportOrdersViewModel
+            }).Select(x => new ReportOrdersViewModel
             {
                 DateCreate = x.DateCreate,
                 PrintedName = x.PrintedName,
                 Count = x.Count,
                 Sum = x.Sum,
                 Status = x.Status
-            })
-           .ToList();
+            }).ToList();
+        }
+
+        public List<ReportWarehouseComponentViewModel> GetWarehouseComponent()
+        {
+            var warehouses = _warehouseStorage.GetFullList();
+            var list = new List<ReportWarehouseComponentViewModel>();
+            foreach (var warehouse in warehouses)
+            {
+                var record = new ReportWarehouseComponentViewModel
+                {
+                    WarehouseName = warehouse.WarehouseName,
+                    Components = new List<Tuple<string, int>>(),
+                    TotalCount = 0
+                };
+                foreach (var component in warehouse.WarehouseComponents)
+                {
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
+                }
+                list.Add(record);
+            }
+            return list;
+        }
+        public List<ReportOrdersAllDatesViewModel> GetOrdersForAllDates()
+        {
+            return _orderStorage.GetFullList()
+                .GroupBy(order => order.DateCreate.ToShortDateString())
+                .Select(rec => new ReportOrdersAllDatesViewModel
+                {
+                    Date = Convert.ToDateTime(rec.Key),
+                    Count = rec.Count(),
+                    Sum = rec.Sum(order => order.Sum)
+                })
+                .ToList();
         }
         /// <summary>
         /// Сохранение компонент в файл-Word
@@ -89,19 +119,21 @@ namespace TypographyBusinessLogic.BusinessLogics
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
-        public void SavePrintedComponentToExcelFile(ReportBindingModel model)
+        public void SavePrintedToExcelFile(ReportBindingModel model)
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список изделий",
+                Title = "Список изделий по компонентами",
                 PrintedComponents = GetPrintedComponent()
             });
         }
+
         /// <summary>
         /// Сохранение заказов в файл-Pdf
         /// </summary>
         /// <param name="model"></param>
+        [Obsolete]
         public void SaveOrdersToPdfFile(ReportBindingModel model)
         {
             SaveToPdf.CreateDoc(new PdfInfo
@@ -113,6 +145,34 @@ namespace TypographyBusinessLogic.BusinessLogics
                 Orders = GetOrders(model)
             });
         }
+        public void SaveWarehousesToWordFile(ReportBindingModel model)
+        {
+            SaveToWord.CreateDocWarehouse(new WordInfoWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Warehouses = _warehouseStorage.GetFullList()
+            });
+        }
+        public void SaveWarehousesComponentsToExcelFile(ReportBindingModel model)
+        {
+            SaveToExcel.CreateDocWarehouse(new ExcelInfoWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                WarehouseComponents = GetWarehouseComponent()
+            });
+        }
 
+        [Obsolete]
+        public void SaveOrdersAllDatesToPdfFile(ReportBindingModel model)
+        {
+            SaveToPdf.CreateDocOrdersAllDates(new PdfInfoOrdersAllDates
+            {
+                FileName = model.FileName,
+                Title = "Список заказов",
+                Orders = GetOrdersForAllDates()
+            });
+        }
     }
 }

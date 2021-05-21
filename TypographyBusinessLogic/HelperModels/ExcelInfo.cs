@@ -1,6 +1,7 @@
-﻿using System;
+﻿using TypographyBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
-using TypographyBusinessLogic.ViewModels;
+using System.Text;
 
 namespace TypographyBusinessLogic.HelperModels
 {
@@ -9,6 +10,5 @@ namespace TypographyBusinessLogic.HelperModels
         public string FileName { get; set; }
         public string Title { get; set; }
         public List<ReportPrintedComponentViewModel> PrintedComponents { get; set; }
-
     }
 }

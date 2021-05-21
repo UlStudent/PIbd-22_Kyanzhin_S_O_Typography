@@ -4,6 +4,9 @@ using System.Text;
 
 namespace TypographyFileImplement.Models
 {
+    /// <summary>
+    /// Самолеты, изготавливаемые на заводе
+    /// </summary>
     public class Printed
     {
         public int Id { get; set; }

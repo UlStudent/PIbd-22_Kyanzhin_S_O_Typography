@@ -1,9 +1,14 @@
-﻿using System;
+﻿using TypographyBusinessLogic.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using TypographyBusinessLogic.Enums;
+using System.Text;
 
 namespace TypographyBusinessLogic.ViewModels
 {
+    /// <summary>
+    /// Заказ
+    /// </summary>
     public class OrderViewModel
     {
         public int Id { get; set; }
@@ -21,4 +26,5 @@ namespace TypographyBusinessLogic.ViewModels
         [DisplayName("Дата выполнения")]
         public DateTime? DateImplement { get; set; }
     }
+
 }

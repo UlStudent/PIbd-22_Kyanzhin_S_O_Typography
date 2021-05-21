@@ -1,6 +1,13 @@
 ﻿using TypographyBusinessLogic.BindingModels;
 using TypographyBusinessLogic.BusinessLogics;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 
@@ -49,7 +56,7 @@ namespace TypographyView
                 {
                     try
                     {
-                        logic.SavePrintedComponentToExcelFile(new ReportBindingModel
+                        logic.SavePrintedToExcelFile(new ReportBindingModel
                         {
                             FileName = dialog.FileName
                         });
@@ -58,8 +65,7 @@ namespace TypographyView
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

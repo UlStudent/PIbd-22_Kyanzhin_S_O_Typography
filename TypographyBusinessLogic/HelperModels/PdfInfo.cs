@@ -1,6 +1,7 @@
-﻿using System;
+﻿using TypographyBusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
-using TypographyBusinessLogic.ViewModels;
+using System.Text;
 
 namespace TypographyBusinessLogic.HelperModels
 {
@@ -11,6 +12,5 @@ namespace TypographyBusinessLogic.HelperModels
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public List<ReportOrdersViewModel> Orders { get; set; }
-
     }
 }

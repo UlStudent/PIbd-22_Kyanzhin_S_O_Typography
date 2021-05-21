@@ -1,10 +1,13 @@
-﻿using System;
+﻿using TypographyBusinessLogic.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using TypographyBusinessLogic.Enums;
 
 namespace TypographyBusinessLogic.BindingModels
 {
+    /// <summary>
+    /// Заказ
+    /// </summary>
     public class OrderBindingModel
     {
         public int? Id { get; set; }
@@ -17,4 +20,5 @@ namespace TypographyBusinessLogic.BindingModels
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
     }
+
 }

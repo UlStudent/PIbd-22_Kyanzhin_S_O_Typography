@@ -5,6 +5,9 @@ using System.Text;
 
 namespace TypographyBusinessLogic.ViewModels
 {
+    /// <summary>
+    /// Изделие, изготавливаемое в магазине
+    /// </summary>
     public class PrintedViewModel
     {
         public int Id { get; set; }
@@ -13,6 +16,5 @@ namespace TypographyBusinessLogic.ViewModels
         [DisplayName("Цена")]
         public decimal Price { get; set; }
         public Dictionary<int, (string, int)> PrintedComponents { get; set; }
-
     }
 }
