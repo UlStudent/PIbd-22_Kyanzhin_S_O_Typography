@@ -95,7 +95,6 @@ namespace TypographyView
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormReportOrdersAllDates";
             this.Text = "Заказы по датам";
-            this.Load += new System.EventHandler(this.FormReportOrdersAllDates_Load);
             this.reportPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersForAllDatesViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);

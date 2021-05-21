@@ -64,10 +64,5 @@ namespace TypographyView
                 }
             }
         }
-
-        private void FormReportOrdersAllDates_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
